@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -22,6 +22,16 @@ const Login = () => {
         console.log("ERROR: ", error.message);
       });
   };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate("/");
+      })
+      .catch((error) => console.log("ERROR: ", error.message));
+  };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col">
@@ -58,6 +68,12 @@ const Login = () => {
               Register
             </Link>
             .
+          </p>
+
+          <p className="text-center mb-4">
+            <button onClick={handleGoogleSignIn} className="btn btn-ghost">
+              Google
+            </button>
           </p>
         </div>
       </div>
